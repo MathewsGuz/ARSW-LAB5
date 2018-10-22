@@ -21,7 +21,6 @@ import org.springframework.stereotype.Service;
 public class InMemoryBlueprintPersistence implements BlueprintsPersistence{
 
     private final Map<Tuple<String,String>,Blueprint> blueprints=new HashMap<>();
-
     public InMemoryBlueprintPersistence() {
         ArrayList<Blueprint> all =new ArrayList<Blueprint>();
         //load stub data
@@ -47,10 +46,22 @@ public class InMemoryBlueprintPersistence implements BlueprintsPersistence{
     }
     
     @Override
-    public Blueprint getAllBlueprint()throws BlueprintNotFoundException{
+    public  ArrayList<Blueprint> getAllBlueprint()throws BlueprintNotFoundException{
+        ArrayList<Blueprint> all =new ArrayList<Blueprint>();
         for(Tuple i:blueprints.keySet()){
-            
+            all.add(blueprints.get(i));
         }
+        return all;
     }
- 
+    
+    @Override
+    public ArrayList<Blueprint>  getBlueprintsByAuthor(String author)throws BlueprintNotFoundException{
+        ArrayList<Blueprint> all =new ArrayList<Blueprint>();
+        for(Tuple i:blueprints.keySet()){
+            if(i.getElem1().equals(author)){
+                all.add(blueprints.get(i));
+            }
+        }
+        return all;
+    }
 }
